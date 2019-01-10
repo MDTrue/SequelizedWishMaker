@@ -2,21 +2,21 @@ var express = require("express");
 
 var router = express.Router();
 
-var wish = require("../models/wish.js");
+var db = require("../models/");
 
 //get post put
 
 router.get("/",function(req, res) {
-    wish.all(function(data){
+    db.Wish.findAll({}).then(function(dbWishes){
         var hbsObject = {
-            wishes: data
+            wishes: dbWishes
         };
         console.log(hbsObject);
         res.render("index",hbsObject);
     });
 });
 router.post("/api/wishes", function(req, res) {
-    wish.create([
+    db.Wish.create([
       "wish_name", "made"
     ], [
       req.body.wish_name, req.body.made
@@ -34,7 +34,7 @@ router.post("/api/wishes", function(req, res) {
   
     console.log("condition", condition);
   
-    wish.update({
+    db.Wish.update({
      made: req.body.made
     }, condition, function(result) {
       if (result.changedRows == 0) {
@@ -49,7 +49,7 @@ router.post("/api/wishes", function(req, res) {
   router.delete("/api/wishes/:id", function(req, res) {
     var condition = "id = " + req.params.id;
   
-    wish.delete(condition, function(result) {
+    db.Wish.delete(condition, function(result) {
       if (result.affectedRows == 0) {
         // If no rows were changed, then the ID must not exist, so 404
         return res.status(404).end();

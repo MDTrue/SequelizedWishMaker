@@ -1,28 +1,10 @@
-var orm = require("../config/orm.js");
+module.exports = function(sequelize, DataTypes) {
+    var Wish = sequelize.define("Wish", {
+      wish_name: DataTypes.STRING,
+      made: {type:DataTypes.BOOLEAN, defaultValue: false
+      },
 
-var wish = {
-    all: function (cb) {
-        orm.all("wishes", function (res) {
-            cb(res);
-        })
-    },
-
-    create: function (cols, vals, cb) {
-        orm.create("wishes", cols, vals, function (res) {
-            cb(res)
-        })
-    },
-
-    update: function (objColVals,condition, cb) {
-        orm.update("wishes", objColVals, condition, function (res) {
-            cb(res)
-        })
-    },
-
-    delete: function(condition, cb) {
-        orm.delete("wishes", condition, function(res) {
-          cb(res);
-        });
-      }
-}
-module.exports = wish;
+    });
+    return Wish;
+  };
+  
