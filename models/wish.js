@@ -1,10 +1,16 @@
+
 module.exports = function(sequelize, DataTypes) {
     var Wish = sequelize.define("Wish", {
       wish_name: DataTypes.STRING,
-      made: {type:DataTypes.BOOLEAN, defaultValue: false
-      },
-
-    });
+      made: {
+        type:DataTypes.BOOLEAN, 
+        defaultValue: false
+      }
+    }, 
+      {
+        timestamps: false
+      }
+  );
     return Wish;
   };
   
