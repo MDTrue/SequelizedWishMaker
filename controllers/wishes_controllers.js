@@ -7,11 +7,17 @@ var db = require("../models/");
 //get post put
 
 router.get("/",function(req, res) {
-    db.Wish.findAll({}).then(function(dbWishes){
+    db.Wish.findAll({raw:true}).then(function(dbWishes){
+      
+      var hbsArr = []
       for(var j = 0;j <dbWishes.length;j++){
-        var hbsObject = { 
-            wishes: dbWishes[j].dataValues
-        }};
+        hbsArr.push(dbWishes[j])
+        console.log("each db wish",dbWishes[j])
+      };
+      console.log("the whole array",hbsArr)
+      var hbsObject = { 
+        wishes: hbsArr
+    }
         console.log(hbsObject);
         res.render("index",hbsObject);
     });
